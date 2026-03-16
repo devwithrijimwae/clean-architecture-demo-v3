@@ -1,0 +1,6 @@
+@clean_architecture_demo_v3_HostAddress = http://localhost:5138
+
+GET {{clean_architecture_demo_v3_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
