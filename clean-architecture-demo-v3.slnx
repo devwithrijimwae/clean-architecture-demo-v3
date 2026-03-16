@@ -1,3 +1,14 @@
 <Solution>
-  <Project Path="clean-architecture-demo-v3/clean-architecture-demo-v3.csproj" />
+  <Folder Name="/Src/" />
+  <Folder Name="/Src/Core/">
+    <Project Path="Application/Application.csproj" />
+    <Project Path="Domain/Domain.csproj" />
+  </Folder>
+  <Folder Name="/Src/Infrastructure/">
+    <Project Path="Infrastructure/Infrastructure.csproj" />
+    <Project Path="Persistence/Persistence.csproj" />
+  </Folder>
+  <Folder Name="/Src/Presentation/">
+    <Project Path="WebApi/WebApi.csproj" />
+  </Folder>
 </Solution>
