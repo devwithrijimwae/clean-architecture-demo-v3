@@ -7,7 +7,7 @@ namespace Infrastructure
     {
         public static void AddInfrastructure(this IServiceCollection services)
         {
-            //
+            
         }
     }
 }

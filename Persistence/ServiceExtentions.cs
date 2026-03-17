@@ -8,16 +8,17 @@ namespace Persistence
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
+        public static void AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
 
-            services.AddScoped<IApplicationDbContext>(provider =>
-                provider.GetRequiredService<ApplicationDbContext>());
+            services.AddDbContext<ApplicationDbContext>(option => option.UseSqlServer(
+               configuration.GetConnectionString("DefaultConnection")
+               ));
 
-            return services;
+            services.AddScoped<IApplicationDbContext>();
         }
 
     }
