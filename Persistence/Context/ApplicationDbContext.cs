@@ -1,21 +1,19 @@
-﻿using Application.Features.Product.Queries;
-using Application.Interfaces;
+﻿using Application.Interfaces;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Context
 {
     public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
+
         }
-
-        public DbSet<Product> Products { get; set; } = null!;
-
-        public async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+        public DbSet<Product> Products { get; set; }
+        public async Task<int> SaveChangesAsync()
         {
-            return await base.SaveChangesAsync(cancellationToken);
+            return await base.SaveChangesAsync();
         }
     }
 }
