@@ -1,0 +1,45 @@
+﻿using Application.Interfaces;
+using Application.Wrappers;
+using AutoMapper;
+using MediatR;
+
+namespace Application.Features.Product.Commands
+{
+        public class CreateProductCommand : IRequest<ApiResponse<int>>
+        {
+            public string? Name { get; set; }
+            public string? Remarks { get; set; }
+            public decimal Rate { get; set; }
+
+            internal class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, ApiResponse<int>>
+            {
+                private readonly IApplicationDbContext _context;
+                private readonly IMapper _mapper;
+
+
+                public CreateProductCommandHandler(IApplicationDbContext context, IMapper mapper)
+                {
+                    _context = context;
+                    _mapper = mapper;
+                }
+                public async Task<ApiResponse<int>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+                {
+                    //logic
+                    //return 1;
+                    //var product = new Domain.Entities.Product();
+
+                    //product.Name = request.Name;
+                    //product.Description = request.Description;
+                    //product.Rate = request.Rate;
+
+                    var product = _mapper.Map<Domain.Entities.Product>(request);
+
+                    await _context.Products.AddAsync(product);
+                    await _context.SaveChangesAsync();
+
+                    return new ApiResponse<int>(product.Id, "Product Fetched successfully");
+                }
+            }
+        }
+
+}

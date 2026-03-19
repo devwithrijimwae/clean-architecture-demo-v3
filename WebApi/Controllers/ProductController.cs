@@ -1,8 +1,8 @@
-﻿using Application.Features.product.Queries;
-using Application.Features.Product.Commands;
+﻿using Application.Features.Product.Commands;
 using Application.Features.Product.Queries;
-using Application.Features.Products.Commands;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -21,10 +21,11 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetProducts()
         {
-            var result = await _mediator.Send(new GetAllProductQuery());
+            var result = await _mediator.Send(new GetAllProductsQuery());
             return Ok(result);
         }
 
+        [Authorize(Roles = "User")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProductById(int id)
         {
@@ -32,21 +33,21 @@ namespace WebApi.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateProduct(CreateProductCommand command, CancellationToken cancellationToken)
+        [HttpPost("CreateProduct")]
+        public async Task<IActionResult> CreateProduct(CreateProductCommand createProduct, CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(command, cancellationToken);
+            var result = await _mediator.Send(createProduct, cancellationToken);
             return Ok(result);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateProduct(UpdateProductCommand command, CancellationToken cancellationToken)
+        [HttpPut("UpdateProduct")]
+        public async Task<IActionResult> UpdateProduct(UpdateProductCommand updateProduct, CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(command, cancellationToken);
+            var result = await _mediator.Send(updateProduct, cancellationToken);
             return Ok(result);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("DeleteProduct/{id}")]
         public async Task<IActionResult> DeleteProduct(int id, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(new DeleteProductCommand { Id = id }, cancellationToken);

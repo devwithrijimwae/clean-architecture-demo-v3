@@ -1,15 +1,17 @@
 <Solution>
+  <Folder Name="/Application/">
+    <Project Path="Application/Application.csproj" Id="ef82ca1b-01b5-455c-a84f-861e445ebfe2" />
+  </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
   </Folder>
   <Folder Name="/Src/" />
   <Folder Name="/Src/Core/">
-    <Project Path="Application/Application.csproj" />
     <Project Path="Domain/Domain.csproj" />
   </Folder>
   <Folder Name="/Src/Infrastructure/">
     <Project Path="Infrastructure/Infrastructure.csproj" />
-    <Project Path="Persistence/Persistence.csproj" />
+    <Project Path="Persistance/Persistance.csproj" Id="c6ca803d-38cf-4604-8b1c-71563c876919" />
   </Folder>
   <Folder Name="/Src/Presentation/">
     <Project Path="WebApi/WebApi.csproj" />
