@@ -2,44 +2,41 @@
 using Application.Wrappers;
 using AutoMapper;
 using MediatR;
+using WebApi.SharedServices;
 
 namespace Application.Features.Product.Commands
 {
-        public class CreateProductCommand : IRequest<ApiResponse<int>>
+    public class CreateProductCommand : IRequest<ApiResponse<int>>
+    {
+        public string Name { get; set; }
+        public string Remarks { get; set; }
+        public decimal Rate { get; set; }
+
+        internal class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, ApiResponse<int>>
         {
-            public string? Name { get; set; }
-            public string? Remarks { get; set; }
-            public decimal Rate { get; set; }
+            private readonly IApplicationDbContext _context;
+            private readonly IMapper _mapper;
+            private readonly IAuthenticatedUser _authenticatedUser;
 
-            internal class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, ApiResponse<int>>
+            public CreateProductCommandHandler(IApplicationDbContext context, IMapper mapper, IAuthenticatedUser authenticatedUser)
             {
-                private readonly IApplicationDbContext _context;
-                private readonly IMapper _mapper;
+                _context = context;
+                _mapper = mapper;
+                _authenticatedUser = authenticatedUser;
+            }
 
+            public async Task<ApiResponse<int>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+            {
+                var product = _mapper.Map<Domain.Entities.Product>(request);
+                product.CreatedBy = _authenticatedUser.UserId;
+                product.CreatedOn = DateTime.UtcNow;
+                await _context.Products.AddAsync(product);
+                await _context.SaveChangesAsync();
 
-                public CreateProductCommandHandler(IApplicationDbContext context, IMapper mapper)
-                {
-                    _context = context;
-                    _mapper = mapper;
-                }
-                public async Task<ApiResponse<int>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
-                {
-                    //logic
-                    //return 1;
-                    //var product = new Domain.Entities.Product();
+                return new ApiResponse<int>(product.Id, "Product Fetched successfully");
 
-                    //product.Name = request.Name;
-                    //product.Description = request.Description;
-                    //product.Rate = request.Rate;
-
-                    var product = _mapper.Map<Domain.Entities.Product>(request);
-
-                    await _context.Products.AddAsync(product);
-                    await _context.SaveChangesAsync();
-
-                    return new ApiResponse<int>(product.Id, "Product Fetched successfully");
-                }
             }
         }
+    }
 
 }
