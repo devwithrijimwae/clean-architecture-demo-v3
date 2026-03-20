@@ -1,6 +1,6 @@
 ﻿using Microsoft.OpenApi.Models;
 
-namespace WebApi.Services
+namespace WebApi
 {
     public static class ServiceExtensions
     {

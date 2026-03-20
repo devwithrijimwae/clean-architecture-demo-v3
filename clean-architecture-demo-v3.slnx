@@ -1,11 +1,11 @@
 <Solution>
-  <Folder Name="/Application/">
-    <Project Path="Application/Application.csproj" Id="ef82ca1b-01b5-455c-a84f-861e445ebfe2" />
-  </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
   </Folder>
   <Folder Name="/Src/" />
+  <Folder Name="/Src/Application/">
+    <Project Path="Application/Application.csproj" Id="ef82ca1b-01b5-455c-a84f-861e445ebfe2" />
+  </Folder>
   <Folder Name="/Src/Core/">
     <Project Path="Domain/Domain.csproj" />
   </Folder>
